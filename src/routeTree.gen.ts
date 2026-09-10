@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllCustomersRouteImport } from './routes/all-customers'
+import { Route as MyCustomersRouteImport } from './routes/my-customers'
+import { Route as AdminAssignmentRouteImport } from './routes/admin.assignment'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminImportRouteImport } from './routes/admin.import'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as CustomerBcnRouteImport } from './routes/customer.$bcn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AllCustomersRoute = AllCustomersRouteImport.update({
+  id: '/all-customers',
+  path: '/all-customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyCustomersRoute = MyCustomersRouteImport.update({
+  id: '/my-customers',
+  path: '/my-customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAssignmentRoute = AdminAssignmentRouteImport.update({
+  id: '/admin/assignment',
+  path: '/admin/assignment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminImportRoute = AdminImportRouteImport.update({
+  id: '/admin/import',
+  path: '/admin/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerBcnRoute = CustomerBcnRouteImport.update({
+  id: '/customer/$bcn',
+  path: '/customer/$bcn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/all-customers': typeof AllCustomersRoute
+  '/my-customers': typeof MyCustomersRoute
+  '/admin/assignment': typeof AdminAssignmentRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/import': typeof AdminImportRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/all-customers': typeof AllCustomersRoute
+  '/my-customers': typeof MyCustomersRoute
+  '/admin/assignment': typeof AdminAssignmentRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/import': typeof AdminImportRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/all-customers': typeof AllCustomersRoute
+  '/my-customers': typeof MyCustomersRoute
+  '/admin/assignment': typeof AdminAssignmentRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/import': typeof AdminImportRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/all-customers'
+    | '/my-customers'
+    | '/admin/assignment'
+    | '/admin/audit'
+    | '/admin/import'
+    | '/admin/users'
+    | '/customer/$bcn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/all-customers'
+    | '/my-customers'
+    | '/admin/assignment'
+    | '/admin/audit'
+    | '/admin/import'
+    | '/admin/users'
+    | '/customer/$bcn'
+  id:
+    | '__root__'
+    | '/'
+    | '/all-customers'
+    | '/my-customers'
+    | '/admin/assignment'
+    | '/admin/audit'
+    | '/admin/import'
+    | '/admin/users'
+    | '/customer/$bcn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AllCustomersRoute: typeof AllCustomersRoute
+  MyCustomersRoute: typeof MyCustomersRoute
+  AdminAssignmentRoute: typeof AdminAssignmentRoute
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminImportRoute: typeof AdminImportRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  CustomerBcnRoute: typeof CustomerBcnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/all-customers': {
+      id: '/all-customers'
+      path: '/all-customers'
+      fullPath: '/all-customers'
+      preLoaderRoute: typeof AllCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-customers': {
+      id: '/my-customers'
+      path: '/my-customers'
+      fullPath: '/my-customers'
+      preLoaderRoute: typeof MyCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/assignment': {
+      id: '/admin/assignment'
+      path: '/admin/assignment'
+      fullPath: '/admin/assignment'
+      preLoaderRoute: typeof AdminAssignmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/import': {
+      id: '/admin/import'
+      path: '/admin/import'
+      fullPath: '/admin/import'
+      preLoaderRoute: typeof AdminImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/$bcn': {
+      id: '/customer/$bcn'
+      path: '/customer/$bcn'
+      fullPath: '/customer/$bcn'
+      preLoaderRoute: typeof CustomerBcnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AllCustomersRoute: AllCustomersRoute,
+  MyCustomersRoute: MyCustomersRoute,
+  AdminAssignmentRoute: AdminAssignmentRoute,
+  AdminAuditRoute: AdminAuditRoute,
+  AdminImportRoute: AdminImportRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  CustomerBcnRoute: CustomerBcnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
