@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AllCustomersRouteImport } from './routes/all-customers'
 import { Route as MyCustomersRouteImport } from './routes/my-customers'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as CustomerBcnRouteImport } from './routes/customer.$bcn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,61 @@ const MyCustomersRoute = MyCustomersRouteImport.update({
   path: '/my-customers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerBcnRoute = CustomerBcnRouteImport.update({
+  id: '/customer/$bcn',
+  path: '/customer/$bcn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/all-customers': typeof AllCustomersRoute
   '/my-customers': typeof MyCustomersRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/all-customers': typeof AllCustomersRoute
   '/my-customers': typeof MyCustomersRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/all-customers': typeof AllCustomersRoute
   '/my-customers': typeof MyCustomersRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/customer/$bcn': typeof CustomerBcnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/all-customers' | '/my-customers'
+  fullPaths:
+    '/' | '/all-customers' | '/my-customers' | '/admin/users' | '/customer/$bcn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/all-customers' | '/my-customers'
-  id: '__root__' | '/' | '/all-customers' | '/my-customers'
+  to:
+    '/' | '/all-customers' | '/my-customers' | '/admin/users' | '/customer/$bcn'
+  id:
+    | '__root__'
+    | '/'
+    | '/all-customers'
+    | '/my-customers'
+    | '/admin/users'
+    | '/customer/$bcn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllCustomersRoute: typeof AllCustomersRoute
   MyCustomersRoute: typeof MyCustomersRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  CustomerBcnRoute: typeof CustomerBcnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +110,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyCustomersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/$bcn': {
+      id: '/customer/$bcn'
+      path: '/customer/$bcn'
+      fullPath: '/customer/$bcn'
+      preLoaderRoute: typeof CustomerBcnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +131,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllCustomersRoute: AllCustomersRoute,
   MyCustomersRoute: MyCustomersRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  CustomerBcnRoute: CustomerBcnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
