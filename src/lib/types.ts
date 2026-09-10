@@ -64,7 +64,7 @@ export type Customer = {
   mbcn: string | null;
   customerName: string;
   phones: { id: string; number: string; primary: boolean }[];
-  address?: string;
+  address?: string | undefined;
   previouslyContacted: boolean;
   propensityScore: number;
   propensityTier: "A" | "B" | "C";
@@ -85,7 +85,7 @@ export type Customer = {
   categories: { name: string; revenue: number }[];
   ownerId: string | null;
   status: CustomerStatus;
-  closureReason?: string;
+  closureReason?: string | undefined;
 };
 
 export type ImportJob = {
