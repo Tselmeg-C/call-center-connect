@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useStore } from "@/lib/store";
+import { STATUS_LABEL, type CustomerStatus } from "@/lib/types";
 
 export const Route = createFileRoute("/all-customers")({
   head: () => ({
@@ -28,9 +29,88 @@ export const Route = createFileRoute("/all-customers")({
       },
     ],
   }),
-  component: AllCustomers;
+  component: AllCustomers,
 });
 
 function AllCustomers() {
-  return null;
+  const { customers, users } = useStore();
+  const [query, setQuery] = useState("");
+  const [owner, setOwner] = useState("all");
+  const [status, setStatus] = useState("all");
+  const [tier, setTier] = useState("all");
+
+  const rows = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return customers
+      .filter((c) => {
+        if (q && !c.customerName.toLowerCase().includes(q) && !c.bcn.toLowerCase().includes(q)) return false;
+        if (owner === "unassigned" && c.ownerId) return false;
+        if (owner !== "all" && owner !== "unassigned" && c.ownerId !== owner) return false;
+        if (status !== "all" && c.status !== status) return false;
+        if (tier !== "all" && c.propensityTier !== tier) return false;
+        return true;
+      })
+      .sort((a, b) => a.propensityRank - b.propensityRank);
+  }, [customers, query, owner, status, tier]);
+
+  return (
+    <>
+      <PageHeader
+        title="All Customers"
+        description="Full customer database. Accounts owned by another salesperson open read-only."
+      />
+
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <Input
+          placeholder="Search name or BCN…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="max-w-xs bg-surface"
+        />
+        <Select value={owner} onValueChange={setOwner}>
+          <SelectTrigger className="w-48 bg-surface">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Any owner</SelectItem>
+            <SelectItem value="unassigned">Unassigned</SelectItem>
+            {users
+              .filter((u) => u.role === "sales")
+              .map((u) => (
+                <SelectItem key={u.id} value={u.id}>
+                  {u.name}
+                </SelectItem>
+              ))}
+          </SelectContent>
+        </Select>
+        <Select value={status} onValueChange={setStatus}>
+          <SelectTrigger className="w-48 bg-surface">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Any status</SelectItem>
+            {(Object.keys(STATUS_LABEL) as CustomerStatus[]).map((s) => (
+              <SelectItem key={s} value={s}>
+                {STATUS_LABEL[s]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={tier} onValueChange={setTier}>
+          <SelectTrigger className="w-40 bg-surface">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Any tier</SelectItem>
+            <SelectItem value="A">Tier A</SelectItem>
+            <SelectItem value="B">Tier B</SelectItem>
+            <SelectItem value="C">Tier C</SelectItem>
+          </SelectContent>
+        </Select>
+        <span className="ml-auto text-sm text-muted-foreground">{rows.length} of {customers.length}</span>
+      </div>
+
+      <CustomerTable rows={rows} />
+    </>
+  );
 }
