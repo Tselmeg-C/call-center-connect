@@ -15,6 +15,7 @@ import { Route as MyCustomersRouteImport } from './routes/my-customers'
 import { Route as AdminAssignmentRouteImport } from './routes/admin.assignment'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
 import { Route as AdminImportRouteImport } from './routes/admin.import'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as CustomerBcnRouteImport } from './routes/customer.$bcn'
 
@@ -48,6 +49,11 @@ const AdminImportRoute = AdminImportRouteImport.update({
   path: '/admin/import',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/admin/assignment': typeof AdminAssignmentRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/customer/$bcn': typeof CustomerBcnRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/admin/assignment': typeof AdminAssignmentRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/customer/$bcn': typeof CustomerBcnRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/admin/assignment': typeof AdminAssignmentRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/customer/$bcn': typeof CustomerBcnRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/admin/assignment'
     | '/admin/audit'
     | '/admin/import'
+    | '/admin/reports'
     | '/admin/users'
     | '/customer/$bcn'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/admin/assignment'
     | '/admin/audit'
     | '/admin/import'
+    | '/admin/reports'
     | '/admin/users'
     | '/customer/$bcn'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/admin/assignment'
     | '/admin/audit'
     | '/admin/import'
+    | '/admin/reports'
     | '/admin/users'
     | '/customer/$bcn'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   AdminAssignmentRoute: typeof AdminAssignmentRoute
   AdminAuditRoute: typeof AdminAuditRoute
   AdminImportRoute: typeof AdminImportRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   CustomerBcnRoute: typeof CustomerBcnRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/admin/users'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAssignmentRoute: AdminAssignmentRoute,
   AdminAuditRoute: AdminAuditRoute,
   AdminImportRoute: AdminImportRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminUsersRoute: AdminUsersRoute,
   CustomerBcnRoute: CustomerBcnRoute,
 }
