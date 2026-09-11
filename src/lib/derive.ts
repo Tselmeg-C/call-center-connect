@@ -10,10 +10,10 @@ export const BUCKET_LABEL: Record<Bucket, string> = {
   other: "Other assigned customers",
 };
 
+// UTC-based so server and client agree during hydration.
 const startOfToday = () => {
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.getTime();
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 };
 
 export function openFollowUp(followUps: FollowUp[], bcn: string) {
@@ -41,7 +41,12 @@ export function currency(n: number) {
 
 export function shortDate(value?: string | null) {
   if (!value) return "—";
-  return new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 export function dateTime(value: string) {
@@ -51,5 +56,6 @@ export function dateTime(value: string) {
     year: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "UTC",
   });
 }
