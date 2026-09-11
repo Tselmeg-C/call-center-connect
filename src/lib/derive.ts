@@ -10,10 +10,10 @@ export const BUCKET_LABEL: Record<Bucket, string> = {
   other: "Other assigned customers",
 };
 
+// UTC-based so server and client agree during hydration.
 const startOfToday = () => {
   const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d.getTime();
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 };
 
 export function openFollowUp(followUps: FollowUp[], bcn: string) {
