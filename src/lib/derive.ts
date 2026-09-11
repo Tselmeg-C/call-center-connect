@@ -41,7 +41,12 @@ export function currency(n: number) {
 
 export function shortDate(value?: string | null) {
   if (!value) return "—";
-  return new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 export function dateTime(value: string) {
@@ -51,5 +56,6 @@ export function dateTime(value: string) {
     year: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "UTC",
   });
 }
